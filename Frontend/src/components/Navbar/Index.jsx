@@ -1,9 +1,38 @@
-import "./Navbar.css"; 
+import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Navbar() {
   const { user } = useAuth(); // <-- pega usuário logado
+
+  // Função para alternar o tema
+  const toggleTheme = () => {
+    const html = document.documentElement;
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  };
+
+  // Função para alternar o idioma
+  const toggleLanguage = () => {
+    const currentLang = localStorage.getItem('language') || 'pt';
+    const newLang = currentLang === 'pt' ? 'en' : 'pt';
+    
+    localStorage.setItem('language', newLang);
+    
+    // Dispara um evento customizado para que outros componentes possam reagir
+    window.dispatchEvent(new CustomEvent('languageChange', { detail: newLang }));
+    
+    // Opcional: recarregar a página para aplicar as traduções
+    // window.location.reload();
+    
+    // Alternativa: atualizar estado global se estiver usando Context API para idioma
+    console.log('Idioma alterado para:', newLang);
+  };
 
   return (
     <>
@@ -36,7 +65,7 @@ export default function Navbar() {
             {/* COMUNIDADES */}
             <li>
               <Link
-                to="#"
+                to="/Community"
                 className="navbar-item flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 hover:translate-x-1 text-[#B15B3C] dark:text-white"
               >
                 <ion-icon name="people-sharp"></ion-icon>
@@ -65,15 +94,26 @@ export default function Navbar() {
               </Link>
             </li>
 
-            {/* CONFIGURAÇÕES */}
+            {/* BOTÃO DE TEMA */}
             <li>
-              <Link
-                to="#"
-                className="navbar-item flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 hover:translate-x-1 text-[#B15B3C] dark:text-white"
+              <button
+                onClick={toggleTheme}
+                className="navbar-item flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 hover:translate-x-1 text-[#B15B3C] dark:text-white w-full text-left"
               >
-                <ion-icon name="settings-sharp"></ion-icon>
-                <span className="hidden md:flex">Configurações</span>
-              </Link>
+                <ion-icon name="contrast-sharp"></ion-icon>
+                <span className="hidden md:flex">Alternar Tema</span>
+              </button>
+            </li>
+
+            {/* BOTÃO DE IDIOMA - ADICIONADO AQUI */}
+            <li>
+              <button
+                onClick={toggleLanguage}
+                className="navbar-item flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 hover:translate-x-1 text-[#B15B3C] dark:text-white w-full text-left"
+              >
+                <ion-icon name="language-sharp"></ion-icon>
+                <span className="hidden md:flex">Mudar Idioma</span>
+              </button>
             </li>
 
             {/* ----------------------------- */}

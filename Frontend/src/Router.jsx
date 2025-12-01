@@ -8,18 +8,20 @@ import Msg from "./pages/Msg/Index.jsx";
 import Login from "./pages/Login/Index.jsx";
 import Register from "./pages/Register/Index.jsx";
 import ArtistDashboard from "./pages/ArtistDashboard/ArtistDashboard.jsx";
+import Community from "./pages/Community/index.jsx";
 
 export default function AppRoutes() {
   const [ isLoggedIn ] = useState(false);
   return (
     <Routes>
-      <Route path="/" element={<Main isLoggedIn={isLoggedIn}/>} />
+      <Route path="/" element={<Main isLosggedIn={isLoggedIn}/>} />
       <Route path="/Library" element={<Library isLoggedIn={isLoggedIn}/>} />
       <Route path="/Profile" element={<Profile isLoggedIn={isLoggedIn}/>} />
       <Route path="/Msg" element={<Msg isLoggedIn={isLoggedIn}/>} />
       <Route path="/Login" element={<Login isLoggedIn={isLoggedIn}/>}/>
       <Route path="/Register" element={<Register isLoggedIn={isLoggedIn}/>}/>
       <Route path="/Dashboard" element={<ArtistDashboard isLoggedIn={isLoggedIn}/>}/>
-    </Routes>
+      <Route path="/Community" element={<Community isLoggedIn={isLoggedIn}/>}/>
+    /</Routes>
   );
 }
